@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class AddFoodScreen extends StatefulWidget {
-  const AddFoodScreen({Key? key}) : super(key: key);
+  final String? docId; // optional: editing existing food
+  final Map<String, dynamic>? initialData; // optional: pre-fill form
+
+  const AddFoodScreen({Key? key, this.docId, this.initialData}) : super(key: key);
 
   @override
   _AddFoodScreenState createState() => _AddFoodScreenState();
@@ -32,6 +35,24 @@ class _AddFoodScreenState extends State<AddFoodScreen> {
     'liter',
   ];
 
+  @override
+  void initState() {
+    super.initState();
+
+    // If editing, populate fields
+    if (widget.initialData != null) {
+      final data = widget.initialData!;
+      _foodController.text = data['food'] ?? '';
+      _typeController.text = data['type'] ?? '';
+      _servingSizeController.text = (data['serving']?['size'] ?? '').toString();
+      _selectedUnit = data['serving']?['unit'] ?? 'grams';
+      _kcalController.text = (data['nutrition']?['kcal'] ?? '').toString();
+      _proteinController.text = (data['nutrition']?['protein'] ?? '').toString();
+      _carbsController.text = (data['nutrition']?['carbs'] ?? '').toString();
+      _fatController.text = (data['nutrition']?['fat'] ?? '').toString();
+    }
+  }
+
   Future<void> _saveFood() async {
     final foodData = {
       'food': _foodController.text,
@@ -46,22 +67,31 @@ class _AddFoodScreenState extends State<AddFoodScreen> {
         'carbs': double.tryParse(_carbsController.text) ?? 0,
         'fat': double.tryParse(_fatController.text) ?? 0,
       },
-      'createdAt': FieldValue.serverTimestamp(),
+      'updatedAt': FieldValue.serverTimestamp(),
     };
 
-    await FirebaseFirestore.instance
+    final collection = FirebaseFirestore.instance
         .collection('users')
         .doc('ChrisPersonal')
-        .collection('foods')
-        .add(foodData);
+        .collection('foods');
 
-    Navigator.pop(context); // close after saving
+    if (widget.docId != null) {
+      // Update existing doc
+      await collection.doc(widget.docId).update(foodData);
+    } else {
+      // Create new doc
+      foodData['createdAt'] = FieldValue.serverTimestamp();
+      await collection.add(foodData);
+    }
+
+    // Go back to FoodListScreen
+    Navigator.pushNamedAndRemoveUntil(context, '/foodList', (route) => false);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Add Food")),
+      appBar: AppBar(title: Text(widget.docId != null ? "Edit Food" : "Add Food")),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Form(
@@ -126,7 +156,7 @@ class _AddFoodScreenState extends State<AddFoodScreen> {
                 const SizedBox(height: 20),
                 ElevatedButton(
                   onPressed: _saveFood,
-                  child: const Text("Save"),
+                  child: Text(widget.docId != null ? "Update" : "Save"),
                 ),
               ],
             ),
