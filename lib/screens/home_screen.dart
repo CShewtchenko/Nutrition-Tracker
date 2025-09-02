@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart'; // For formatting date
+import 'food_list_screen.dart'; // <-- Import your FoodListScreen
 
 class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Get today's date
-    final String today = DateFormat('EEEE, MMMM d, yyyy').format(DateTime.now());
+    final String today =
+        DateFormat('EEEE, MMMM d, yyyy').format(DateTime.now());
 
     return Scaffold(
       drawer: _buildDrawer(context),
@@ -71,19 +73,32 @@ class HomeScreen extends StatelessWidget {
               ),
             ),
             ListTile(
-              title: Text('Daily Log', style: TextStyle(color: Colors.grey[200])),
+              title: Text('Food List', style: TextStyle(color: Colors.grey[200])),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => FoodListScreen()),
+                );
+              },
+            ),
+            ListTile(
+              title:
+                  Text('Daily Log', style: TextStyle(color: Colors.grey[200])),
               onTap: () {},
             ),
             ListTile(
-              title: Text('History', style: TextStyle(color: Colors.grey[200])),
+              title:
+                  Text('History', style: TextStyle(color: Colors.grey[200])),
               onTap: () {},
             ),
             ListTile(
-              title: Text('Weekly Overview', style: TextStyle(color: Colors.grey[200])),
+              title: Text('Weekly Overview',
+                  style: TextStyle(color: Colors.grey[200])),
               onTap: () {},
             ),
             ListTile(
-              title: Text('Settings', style: TextStyle(color: Colors.grey[200])),
+              title:
+                  Text('Settings', style: TextStyle(color: Colors.grey[200])),
               onTap: () {},
             ),
           ],
