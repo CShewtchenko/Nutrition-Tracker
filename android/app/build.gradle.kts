@@ -7,7 +7,7 @@ plugins {
 }
 
 android {
-    namespace = "com.personal.tracker"
+    namespace = "com.nutrition.tracker"
     compileSdk = 35
     ndkVersion = "27.0.12077973"
 
@@ -24,7 +24,7 @@ android {
         // Force minSdk here to prevent Flutter plugin injection from breaking Kotlin DSL
         minSdk = 23
 
-        applicationId = "com.personal.tracker"
+        applicationId = "com.nutrition.tracker"
         targetSdk = 35
         versionCode = 1
         versionName = "1.0"
