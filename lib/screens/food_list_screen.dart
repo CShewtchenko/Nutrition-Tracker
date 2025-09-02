@@ -130,21 +130,23 @@ class _FoodListScreenState extends State<FoodListScreen> {
   }
 
   Future<void> _openEditFood(
-    String docId,
-    Map<String, dynamic> data,
-  ) async {
-    await Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (_) => AddFoodScreen(
-          docId: docId,
-          initialData: data,
-        ),
+  String docId,
+  Map<String, dynamic> data,
+) async {
+  await Navigator.push(
+    context,
+    MaterialPageRoute(
+      builder: (_) => AddFoodScreen(
+        docId: docId,
+        initialData: data,
       ),
-    );
-    await _loadTypes();
-    await _loadPage(reset: true);
-  }
+    ),
+  );
+  // Refresh when coming back
+  await _loadTypes();
+  await _loadPage(reset: true);
+}
+
 
   @override
   Widget build(BuildContext context) {
