@@ -1,62 +1,56 @@
 import 'package:flutter/material.dart';
+import 'home_screen.dart';
+import 'food_list_screen.dart'; // Import your FoodListScreen
 
-class HomeScreen extends StatefulWidget {
-  @override
-  State<HomeScreen> createState() => _HomeScreenState();
+void main() {
+  runApp(const MyApp());
 }
 
-class _HomeScreenState extends State<HomeScreen> {
-  // Track selected screen
-  String _currentScreen = 'Daily Log';
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Nutrition Tracker',
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        brightness: Brightness.dark,
+        primarySwatch: Colors.green,
+      ),
+      home: HomeScreenWrapper(), // Wrap HomeScreen to allow navigation
+    );
+  }
+}
+
+// A simple wrapper to handle HomeScreen navigation logic
+class HomeScreenWrapper extends StatefulWidget {
+  @override
+  State<HomeScreenWrapper> createState() => _HomeScreenWrapperState();
+}
+
+class _HomeScreenWrapperState extends State<HomeScreenWrapper> {
+  // Track selected screen
+  String _currentScreen = 'Home';
+
+  @override
+  Widget build(BuildContext context) {
+    Widget content;
+
+    switch (_currentScreen) {
+      case 'Food List':
+        content = FoodListScreen();
+        break;
+      default:
+        content = HomeScreenContent(screenName: _currentScreen);
+    }
+
     return Scaffold(
       drawer: _buildDrawer(),
       body: Stack(
         children: [
           BackgroundTriangles(),
-          SafeArea(
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  // Top app bar with hamburger
-                  Row(
-                    children: [
-                      Builder(
-                        builder: (context) => IconButton(
-                          icon: Icon(Icons.menu, color: Colors.green[400]),
-                          onPressed: () => Scaffold.of(context).openDrawer(),
-                        ),
-                      ),
-                      SizedBox(width: 8),
-                      Text(
-                        _currentScreen,
-                        style: TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.green[400],
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 24),
-                  // Placeholder content
-                  Expanded(
-                    child: Center(
-                      child: Text(
-                        '$_currentScreen content goes here',
-                        style: TextStyle(color: Colors.grey[200], fontSize: 18),
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
+          SafeArea(child: content),
         ],
       ),
     );
@@ -76,6 +70,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 style: TextStyle(color: Colors.white, fontSize: 24),
               ),
             ),
+            _drawerItem('Home'),
+            _drawerItem('Food List'),
             _drawerItem('Daily Log'),
             _drawerItem('History'),
             _drawerItem('Weekly Overview'),
@@ -100,6 +96,43 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 }
 
+// The placeholder content for non-FoodList screens
+class HomeScreenContent extends StatelessWidget {
+  final String screenName;
+  const HomeScreenContent({required this.screenName});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            screenName,
+            style: TextStyle(
+              fontSize: 24,
+              fontWeight: FontWeight.bold,
+              color: Colors.green[400],
+            ),
+          ),
+          SizedBox(height: 24),
+          Expanded(
+            child: Center(
+              child: Text(
+                '$screenName content goes here',
+                style: TextStyle(color: Colors.grey[200], fontSize: 18),
+                textAlign: TextAlign.center,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+// Keep your BackgroundTriangles and TriangleGradientPainter classes as is
 class BackgroundTriangles extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -128,7 +161,7 @@ class TriangleGradientPainter extends CustomPainter {
     ).createShader(Rect.fromLTWH(0, 0, size.width, size.height));
     canvas.drawPath(path1, paint);
 
-    // Triangle 2 (example)
+    // Triangle 2
     var path2 = Path();
     path2.moveTo(size.width, size.height);
     path2.lineTo(size.width * 0.5, size.height);
