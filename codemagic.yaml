@@ -1,0 +1,24 @@
+workflows:
+  flutter-build:
+    name: Flutter APK Build
+    environment:
+      flutter: stable  # ensure Dart 3 included
+      xcode: latest
+      vars:
+        GRADLE_OPTS: "-Xmx1536M"
+
+    cache:
+      cache_paths: []  # disable cache temporarily to force fresh build
+
+    scripts:
+      - name: Get Flutter dependencies
+        script: flutter pub get
+
+      - name: Clean previous build
+        script: flutter clean
+
+      - name: Build APK (Debug)
+        script: flutter build apk --debug --no-shrink
+
+    artifacts:
+      - build/app/outputs/flutter-apk/app-debug.apk

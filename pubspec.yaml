@@ -1,0 +1,57 @@
+name: personal_tracker
+description: Zeriel fitness app.
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.0.0
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  hive: ^2.2.3
+  hive_flutter: ^1.1.0
+
+  # Firebase core - required for all Firebase services
+  firebase_core: ^2.15.1
+
+  # Firebase Authentication (for sign-in, subscription accounts)
+  firebase_auth: ^4.2.6
+
+  # Firebase Analytics (optional but good for tracking user events)
+  firebase_analytics: ^10.5.0
+
+  # Firebase Crashlytics for error tracking
+  firebase_crashlytics: ^3.0.6
+
+  # Firestore for user data storage (username, profile info)
+  cloud_firestore: ^4.7.0
+
+  # Firebase Storage for profile picture uploads
+  firebase_storage: ^11.1.0
+
+  # Image picker for selecting profile pictures from gallery or camera
+  image_picker: ^0.8.7+4
+
+  # Connectivity check for network status detection
+  connectivity_plus: ^4.0.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^4.0.0
+  flutter_launcher_icons: ^0.12.0
+
+flutter_icons:
+  android: true
+  ios: false
+  image_path: "assets/icons/app_icon.png"
+
+flutter:
+  uses-material-design: true
+  
+  assets:
+    - assets/exercises.json
+    - assets/icons/app_icon.png

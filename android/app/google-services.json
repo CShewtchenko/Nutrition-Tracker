@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "171458821454",
+    "project_id": "zeriel-project",
+    "storage_bucket": "zeriel-project.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:171458821454:android:5cc0192813e7ad5e72f21f",
+        "android_client_info": {
+          "package_name": "com.personal.tracker"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCXLz3VNUCNVDHCLffTV-uZZldgzpO43DE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:171458821454:android:b0c4f3c8adedb0e772f21f",
+        "android_client_info": {
+          "package_name": "com.zeriel.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCXLz3VNUCNVDHCLffTV-uZZldgzpO43DE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
