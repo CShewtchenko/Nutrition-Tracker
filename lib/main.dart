@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'home_screen.dart';
-import 'food_list_screen.dart'; // Import your FoodListScreen
+import 'screens/food_list_screen.dart'; // Import your FoodListScreen
 
 void main() {
   runApp(const MyApp());
