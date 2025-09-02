@@ -1,4 +1,4 @@
-package com.personal.tracker
+package com.nutrition.tracker
 
 import io.flutter.embedding.android.FlutterActivity
 
